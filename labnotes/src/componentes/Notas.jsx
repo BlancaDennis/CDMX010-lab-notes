@@ -12,7 +12,8 @@ function GuardarNotas (){
         const getNotas = async () =>{
         const { docs } = await db.collection('notas').get()
         const nuevoArray = docs.map(item =>({id: item.id, ...item.data() }))
-        setUsuariosNotas(nuevoArray);
+        setUsuariosNotas(nuevoArray)
+        console.log(nuevoArray);
       }
       getNotas();
   },[])
@@ -21,10 +22,10 @@ function GuardarNotas (){
   const setUsuarios = async (e) => {
     e.preventDefault()
     if(!titulo.trim()){
-      setError("El titulo esta vacio")
+      alert("El titulo esta vacio")
     }
     if(!nota.trim()){
-      setError("El contenido de la nota esta vacio")
+      alert("El contenido de la nota esta vacio")
     }
     const notaObjeto = {
       tituloObjeto : titulo,
@@ -33,10 +34,10 @@ function GuardarNotas (){
     try{
 
       const data = await db.collection('notas').add(notaObjeto)
-      const { docs } = await db.collection('notas').get()
-      const nuevoArray = docs.map(item =>({id: item.id, ...item.data() }))
-      setUsuariosNotas(nuevoArray);
-      alert('nota añadida')
+        const { docs } = await db.collection('notas').get()
+        const nuevoArray = docs.map(item =>({id: item.id, ...item.data() }))
+        setUsuariosNotas(nuevoArray);
+        alert('nota añadida')
       console.log('Nota añadida')
       setTitulo("")
       setNota("")
@@ -46,6 +47,17 @@ function GuardarNotas (){
     }
     
 
+  }
+
+  const borrarNota = async (id) => {
+    try{
+      await db.collection('notas').doc(id).delete()
+      const { docs } = await db.collection('notas').get()
+      const nuevoArray = docs.map(item =>({id: item.id, ...item.data() }))
+      setUsuariosNotas(nuevoArray);
+    }catch(e){
+      console.log(e)
+    }
   }
 
     return(
@@ -63,9 +75,17 @@ function GuardarNotas (){
         {
           usuariosNota.length !== 0 ? (
             usuariosNota.map(item =>(
+            <div>
               <div id="cardNote" key={item.id}>
                 <div id="titleStyle">{item.tituloObjeto}</div> 
-                <div id="noteStyle">{item.notaObjeto}</div> </div>
+                <div id="noteStyle">{item.notaObjeto}</div>
+                </div>
+                <div id="buttonsArea">
+                <button onClick={(id)=>{borrarNota(item.id)}} className="eliminar"></button><button className="editar"></button>
+                </div>
+              
+              </div>
+              
             ))
           ) :(
             <span>

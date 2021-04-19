@@ -87,7 +87,7 @@ form{
 	padding:10px;
 	border-radius:5px;
 	margin: 10px 0px 12px 20px;
-	background-color:#E5E5E5;
+	background-color:#f6f6f6;
   ;
 }
 
@@ -95,11 +95,43 @@ form{
 #titleStyle{
   color:#3B5998;
   font-weight: bold;
-  font-size: x-large;
+  font-size: large;
   text-align: initial;
 }
 
 #noteStyle{
-  color:#3B5998;
+  color:#486cbb;
   text-align: initial;
+}
+
+.eliminar{
+  background-image: url(assets/trash-icon.png);
+  padding: 7% 8% 0% 6%;
+  border-radius: 61%;
+  border: medium;
+  margin: 2% 0% -21% 60%;
+  display: flex;
+  justify-content: center;
+  background-repeat:no-repeat;
+  height:50px;
+  width:50px;
+  background-position:center;
+}
+
+.editar{
+  background-image: url(assets/edit-icon.png);
+  padding: 7% 8% 0% 0%;
+  border-radius: 61%;
+  border: medium;
+  margin: 8% 0% 9% 77%;
+  display: flex;
+  justify-content: center;
+  background-repeat:no-repeat;
+  height:50px;
+  width:50px;
+  background-position:center;
+}
+
+.buttonsArea{
+
 }
