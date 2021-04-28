@@ -16,7 +16,7 @@ const LogoutEnd = () => {
         <div>
             <img id="logoBigEnd" src={biglogo}></img>
 
-            <h3 onClick={backtoend} > Iniciar sesión (: </h3>
+            <h3 onClick={backtoend} > Click para iniciar sesión (: </h3>
         </div>
     )
 

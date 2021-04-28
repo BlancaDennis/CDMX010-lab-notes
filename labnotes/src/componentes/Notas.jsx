@@ -7,20 +7,20 @@ function GuardarNotas (){
   const [titulo, setTitulo] = useState("")
   const [nota, setNota] = useState("")
   const [error, setError] = useState("")
-  const [usuariosNota, setUsuariosNotas] = useState([])
+  const [usuariosNota, setNotasNew] = useState([])
 
   useEffect(() => {
         const getNotas = async () =>{
-        const { docs } = await db.collection('notas').get()
+        const { docs } = await db.collection('notas').orderBy("tituloObjeto", "asc").get()
         const nuevoArray = docs.map(item =>({id: item.id, ...item.data() }))
-        setUsuariosNotas(nuevoArray)
+        setNotasNew(nuevoArray)
         console.log(nuevoArray); //renderiza las notas desps de tomar la info
       }
       getNotas(); //trae los datos desde firebase y ademas los renderiza y tmbn los ids pa usar dsps.
   },[])
 
   
-  const setUsuarios = async (e) => {
+  const setNotas = async (e) => {
     e.preventDefault()
     if(!titulo.trim()){
       alert("El titulo esta vacio")
@@ -37,7 +37,7 @@ function GuardarNotas (){
       const data = await db.collection('notas').add(notaObjeto)
         const { docs } = await db.collection('notas').get()
         const nuevoArray = docs.map(item =>({id: item.id, ...item.data() }))
-        setUsuariosNotas(nuevoArray);
+        setNotasNew(nuevoArray);
         alert('nota añadida')
       console.log('Nota añadida')
       setTitulo("")
@@ -55,7 +55,7 @@ function GuardarNotas (){
       await db.collection('notas').doc(id).delete()
       const { docs } = await db.collection('notas').get()
       const nuevoArray = docs.map(item =>({id: item.id, ...item.data() }))
-      setUsuariosNotas(nuevoArray);
+      setNotasNew(nuevoArray);
     }catch(e){
       console.log(e)
     }
@@ -91,7 +91,7 @@ function GuardarNotas (){
       await db.collection('notas').doc(idNota).set(noteUpdate)
       const { docs } = await db.collection('notas').get()
       const nuevoArray = docs.map(item =>({id: item.id, ...item.data() }))
-      setUsuariosNotas(nuevoArray);
+      setNotasNew(nuevoArray);
 
     }catch(e){
     console.log(e)
@@ -106,7 +106,7 @@ function GuardarNotas (){
     return(
         <div className="FormNotes">
       <div>
-        <form onSubmit = {modoEditar ? setUpdate : setUsuarios}>
+        <form onSubmit = {modoEditar ? setUpdate : setNotas}>
           <input value = {titulo} id="inputTitulo" onChange={(e)=>{setTitulo(e.target.value)}} type="text" placeholder="Titulo"/>
           <input value = {nota} id="inputNota" onChange={(e)=>{setNota(e.target.value)}} type="text" placeholder="Agregar nota"/>
           {
